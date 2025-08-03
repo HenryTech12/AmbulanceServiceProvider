@@ -34,7 +34,7 @@ import org.springframework.context.annotation.Configuration;
                         description = "Local Enviroment"
                 ),
                 @Server(
-                        url = "https://",
+                        url = "https://ambulanceserviceprovider.onrender.com",
                         description = "Production Environment"
                 )
         },

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Ambulance Service Provider | Request Tracker</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" th:href="@{/css/output.css}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+<body class="bg-gray-100 font-sans">
+  <span id="message" th:text="${param.msg}" hidden></span>
+  <form th:action="@{/api/user/requests/track}">
+    <div class="max-w-5xl mx-auto p-6">
+      <h1 class="text-3xl font-bold text-gray-800 mb-6">🚑 My Ambulance Requests</h1>
+
+      <div class="grid gap-6">
+
+        <button th:formaction="@{/api/user/request}" class="w-fit px-2 py-2 text-white font-bold bg-blue-600 flex justify-center items-center rounded-2xl gap-2">
+          <span class="material-symbols-outlined">home_app_logo</span>
+          <span>Back To Dashboard</span>
+        </button>
+        <!-- Request Card -->
+        <div class="bg-white shadow-lg rounded-2xl p-6 flex flex-col gap-3 items-start md:items-center justify-between">
+
+          <section th:if="${#lists.isEmpty(requests)}">
+            <h2 class="text-2xl font-bold text-center">No Available Request</h2>
+          </section>
+
+          <section>
+            <h2 class="font-light text-left mx-2">Check Your Mail: To Know If Ambulance Has Arrived....</h2>
+          </section>
+
+          <section th:each="request : ${requests}" class="w-full border-b-4 border-gray-600 py-3">
+            <div class="flex flex-col gap-2 mb-3">
+              <p class="text-lg font-semibold text-gray-800">Request #<span th:text="${request.id}"></span></p>
+              <p class="text-sm text-gray-600 mt-1"><i class="fas fa-map-marker-alt text-red-500 mr-1"></i> <span th:text="${request.address}"></span></p>
+              <p class="text-sm text-gray-600"><i class="far fa-clock text-blue-500 mr-1"></i> Requested on: <span th:text="${request.request_time}"></span></p>
+            </div>
+            <div class="mt-4 md:mt-0">
+              <span th:if="${request.requestStatus.equalsIgnoreCase('Pending')}"  class="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 text-sm font-medium rounded-full" th:text="${request.requestStatus}">Pending</span>
+              <span th:if="${request.requestStatus.equalsIgnoreCase('Approved')}" class="inline-block bg-green-100 text-green-800 px-3 py-1 text-sm font-medium rounded-full" th:text="${request.requestStatus}">Dispatched</span>
+              <div class="flex mt-4 gap-3">
+                <button formmethod="post" th:formaction="@{/api/user/request/cancel/{id}(id=${request.id})}" title="This will cancel your request once the button is clicked" class="border flex justify-center gap-2 hover:cursor-pointer w-fit items-center rounded-2xl px-2 border-red-400">
+                      <span>Cancel Request</span>
+                      <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </button>
+
+                <button th:formaction="@{/api/user/request/{id}/reminder(id=${request.id})}" th:formmethod="post" formmethod="post" title="You can only make request after 15 mins of making request" class="border flex justify-center gap-2 hover:cursor-pointer w-fit items-center rounded-2xl px-2 border-red-400">
+                    <span>Send Reminder</span>
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+
+
+        <!-- Add more request cards dynamically -->
+      </div>
+    </div>
+  </form>
+  <script>
+    let msg = document.getElementById('message');
+    console.log(msg.innerText);
+    if(msg.innerText) {
+      alert(msg.innerText);
+    }
+  </script>
+</body>
+</html>

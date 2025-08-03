@@ -1,0 +1,60 @@
+<html lang="en"
+    xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambulance Service Provider | Login</title>
+    <link rel="stylesheet" th:href="@{/css/output.css}">
+</head>
+<body>
+    <main>
+        <form class="container mx-auto flex flex-col text-center" th:object="${loginRequest}" method="post">
+            <header class="mt-10">
+                <h2 class="font-bold text-3xl">Ambulance Service Provider</h2>
+            </header>
+
+            <h3 class="text-2xl my-3 font-light">Login</h3>
+
+            <div class="content flex flex-col gap-5 m-5 items-start">
+                <div class="bg-red-100 rounded p-3" th:if="${error}">
+                    <span class="text-left" th:text="${error}"></span>
+                </div>
+
+                <div class="bg-yellow-50 rounded p-3" th:if="${param.msg}">
+                    <span class="text-left" th:text="${param.msg}"></span>
+                </div>
+
+                <input
+                    type="email"
+                    placeholder="Email"
+                    class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    th:field="*{email}"
+                    required
+                    />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                    th:field="*{password}"
+                  />
+
+                <section>
+                    <input class="accent-blue-500" type="checkbox" name="remember-me">
+                    <span class="text-gray-500">Remember Me</span>
+                </section>
+
+                <button class="w-full bg-blue-500 h-10 rounded-2xl" th:formaction="@{/api/user/login}">
+                    <span>Sign In</span>
+                </button>
+
+                <footer class="text-center flex flex-col items-center justify-center w-full">
+                    <span class="mt-2">Don't have an account? <a class="text-blue-400 " th:href="@{/api/user/signup}">Sign Up</a></span>
+                    <a th:href="@{/api/user/reset-ui}" class="text-blue-500 text-center mt-3">Reset password</a>
+                </footer>
+            </div>
+        </form> 
+    </main>
+</body>
+</html>

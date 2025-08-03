@@ -1,0 +1,107 @@
+<html lang="en"
+    xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambulance Service Provider | Signup</title>
+    <link rel="stylesheet" th:href="@{/css/output.css}">
+</head>
+<body>
+ <main class="container">
+        <form class="flex flex-col m-2" th:object="${userDTO}" method="post">
+
+            <section class="flex flex-col text-center">
+                <h1 class="font-bold text-3xl">Ambulance Service Provider</h1>
+                <p>Start Your Journey With Us.</p>
+            </section>
+
+            <header>
+                <h2 class="font-bold text-2xl">Sign up</h2>
+                <section class="my-3">
+                    <span>Have an account? <a th:href="@{/api/user/login}" class="text-blue-500">Sign in</a></span>
+                </section>
+            </header>
+
+            <div class="content">
+                <section class="mt-2 mb-5">
+                    <label>Your Role?</label>
+                    <div class="flex gap-5 mt-2">
+                        <section class="bg-white border-gray-400 w-50 py-2 border text-center align-middle rounded shadow shadow-amber-100">
+                            <input required type="radio" value="Admin" class="accent-blue-500" th:field="*{role}" name="checkbox1">
+                            <span>Admin</span>
+                        </section>
+                        <section class="bg-white border-gray-400 w-50 py-2 border text-center align-middle rounded shadow shadow-amber-100">
+                            <input required type="radio" value="Patient" name="checkbox1" th:field="*{role}" class="accent-blue-500">
+                            <span>Patient</span>
+                        </section>
+                    </div>
+                </section>
+
+                <div class="form-content m-3 flex flex-col gap-3">
+                    <section>
+                        <label class="mb-2 block">Fullname</label>
+                        <input
+                                type="text"
+                                placeholder="Enter your fullname"
+                                class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required
+                                th:field="*{fullname}"
+                        />
+                    </section>
+
+                    <section>
+                        <label class="mb-2 block">Email</label>
+                        <input
+                                type="text"
+                                placeholder="Enter your email"
+                                class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required
+                                th:field="*{email}"
+                        />
+                    </section>
+
+                    <section>
+                        <label class="mb-2 block">Contact</label>
+                        <input
+                                type="text"
+                                required
+                                placeholder="Enter your Contact Num"
+                                class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                th:field="*{contactNum}"
+                        />
+                    </section>
+
+                    <section>
+                        <label class="mb-2 block">Your Medical Info</label>
+                        <input
+                                type="text"
+                                placeholder="Medical Description"
+                                class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required
+                                th:field="*{medicalDescription}"
+                        />
+                    </section>
+
+                    <section>
+                        <label class="mb-2 block mt-4">Password</label>
+                        <input
+                            type="password"
+                            placeholder="Choose a password (minimum 8 characters)"
+                            class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+                            title="Password must be at least 8 characters long and include uppercase, lowercase, number, and special character"
+                            th:field="*{password}"
+                        />
+                    </section>
+
+                    <button th:formaction="@{/api/user/create}" class="w-fit px-8 py-3 rounded-2xl bg-blue-500 border border-gray-600 mt-4">
+                        <span>Sign Up</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

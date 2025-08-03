@@ -1,0 +1,56 @@
+<html lang="en"
+    xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambulance Service Provider| Ambulance Home</title>
+    <link rel="stylesheet" th:href="@{/css/output.css}">
+</head>
+<body>
+    <main class="container">
+    <form class="m-8">
+       
+        <h2 class="text-3xl font-bold my-3">Ambulances</h2>
+        <header class="flex gap-2 items-center justify-center">
+            <input
+                    type="text"
+                    placeholder="Search For Ambulance By ID"
+            class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button class="w-fit border px-5 rounded-2xl bg-blue-500 text-white font-bold" th:formaction="@{/admin/api/ambulance/new/create}">
+                <span>Create Ambulance</span>
+            </button>
+        </header>
+
+        <div>
+
+            <section th:if="${ambulanceList.size() > 0}" class="mt-8">
+                <h2 class="my-2 font-bold">All Ambulance</h2>
+                <table class="w-full table-auto border border-gray-300 text-sm">
+                    <thead class="bg-gray-100 dark:bg-gray-700 dark:text-white">
+                    <tr>
+                        <th class="px-4 py-2 border-b">Ambulance ID</th>
+                        <th class="px-4 py-2 border-b">Current Location</th>
+                        <th class="px-4 py-2 border-b">Availibility Status</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="ambulance: ${ambulanceList}">
+                    <tr class="hover:bg-gray-50 text-center">
+                        <td class="px-4 py-2 border-b" th:text="${ambulance.ambulance_id}">Alice</td>
+                        <td class="px-4 py-2 border-b" th:text="${ambulance.current_location}">alice@example.com</td>
+                        <td class="px-4 py-2 border-b" th:text="${ambulance.availabilityStatus}">Admin</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section th:if="${ambulanceList.size() <= 0}">
+                <section class=" mx-auto w-50 h-auto text-center">
+                    <span class="text-red-400 text-4xl align-middle text-center block mt-20">No Ambulance Details Available</span>
+                </section>
+            </section>
+        </div>
+    </form>
+    </main>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<html lang="en"
+    xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambulance Service Provider | Create Ambulance</title>
+    <link rel="stylesheet" th:href="@{/css/output.css}">
+</head>
+<body>
+    <main class="container flex flex-col items-center justify-center gap-3">
+       <form class="m-10" th:object="${ambulance}" id="form" method="post" th:action="@{/admin/api/ambulance/create}">
+           <header>
+               <h2 class="text-3xl font-bold">Create New Ambulance</h2>
+           </header>
+
+           <div class="content flex flex-col gap-3">
+               <h3 class="text-2xl font-light mb-3 text-center">Add New Ambulance</h3>
+
+               <section>
+                   <label>Ambulance ID</label>
+                   <input
+                           required
+                           type="text"
+                           placeholder="e.g, AMB-001"
+                           class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           th:field="*{ambulance_id}"
+                   />
+               </section>
+
+               <section>
+                   <label>Current Location</label>
+                   <input
+                           required
+                           type="text"
+                           placeholder="e.g, City Hospital"
+                           class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           th:field="*{current_location}"
+                   />
+               </section>
+
+
+               <section>
+                   <label>Availability</label>
+                   <select class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required th:field="*{availabilityStatus}">
+                       <optgroup>
+                           <option value="Available">Available</option>
+                           <option value="Unavailable">Unavailable</option>
+                       </optgroup>
+                   </select>
+               </section>
+
+               <button id="submitBtn" class="border border-gray-500 py-2 rounded-2xl shadow shadow-gray-500 text-blue-500 font-bold">Create</button>
+           </div>
+       </form>
+
+        <script>
+             let sbtn = document.getElementById('submitBtn');
+             let myform = document.getElementById('form');
+             sbtn.addEventListener('click', () => {
+                    event.preventDefault();
+
+                    alert('Ambulance Data Added');
+
+                    myform.submit();
+            });
+         </script>
+    </main>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Ambulance Service Provider | Emergency Request Table</title>
+  <link rel="stylesheet" th:href="@{/css/output.css}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+<body class="bg-gray-100 p-4">
+
+  <main class="container">
+    <form>
+        <span hidden th:text="${msg}" id="msg"></span>
+        <header class="text-center my-5">
+            <img width="40" height="40" th:src="@{/assets/ambulance.png}" class="w-40 h-auto mx-auto border rounded-full p-5 my-3">
+            <h2 class="text-2xl font-bold">Thank you for using our ambulance service provider</h2>
+            <span class="block font-light">We've received your order and it has been attended to.</span>
+        </header>
+        <div class="content">
+            <div class="w-full overflow-x-auto">
+                <h2 class="text-1xl font-light mb-4 text-left">User Request Details</h2>
+
+                <table class="w-full table-auto border border-gray-300 text-sm">
+                    <thead class="bg-gray-200">
+                    <tr>
+                        <th class="px-4 py-2 border text-left bg-red-400">Full Name</th>
+                        <th class="px-4 py-2 border text-left bg-red-400">Contact Number</th>
+                        <th class="px-4 py-2 border text-left bg-red-400">Address</th>
+                        <th class="px-4 py-2 border text-left bg-red-400">Emergency Level</th>
+                        <th class="px-4 py-2 border text-left bg-red-400">Request Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="bg-white hover:bg-gray-50">
+                        <td class="px-4 py-2 border" th:text="${request.userDTO.fullname}">John Doe</td>
+                        <td class="px-4 py-2 border" th:text="${request.userDTO.contactNum}">+123456789</td>
+                        <td class="px-4 py-2 border" th:text="${request.address}">123 Main Street, Cityville</td>
+                        <td class="px-4 py-2 border text-red-600 font-semibold" th:text="${request.emergencyLevel}">High</td>
+                        <td class="px-4 py-2 border text-green-600 font-semibold" th:text="${request.request_status}">Dispatched</td>
+                    </tr>
+                    <!-- Add more rows dynamically here -->
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="w-full overflow-x-auto  mt-5">
+                <h2 class="text-1xl font-light mb-4 text-left">Ambulance Request Details</h2>
+
+                <table class="w-full table-auto border border-gray-300 text-sm">
+                    <thead class="bg-gray-200">
+                    <tr>
+                        <th class="px-4 py-2 border text-left bg-red-400">Ambulance ID</th>
+                        <th class="px-4 py-2 border text-left bg-red-400">Ambulance Current Location</th>
+                        <th class="px-4 py-2 border text-left bg-red-400">Dispatch Status</th>
+                        <th class="px-4 py-2 border text-left bg-red-400">Dispatch Time</th>
+                        <th class="px-4 py-2 border text-left bg-red-400">Request Time</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="bg-white hover:bg-gray-50">
+                        <td class="px-4 py-2 border" th:text="${request.ambulanceDTO.ambulance_id}">John Doe</td>
+                        <td class="px-4 py-2 border" th:text="${request.ambulanceDTO.current_location}">+123456789</td>
+                        <td class="px-4 py-2 border" th:text="${request.dispatch_status}">123 Main Street, Cityville</td>
+                        <td class="px-4 py-2 border text-red-600 font-semibold" th:text="${request.dispatch_time}">High</td>
+                        <td class="px-4 py-2 border text-green-600 font-semibold" th:text="${request.request_time}">Dispatched</td>
+                    </tr>
+                    <!-- Add more rows dynamically here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <section class="mt-5 flex items-center gap-8">
+                <button class="flex gap-2 items-center justify-center  w-fit p-2 border rounded bg-amber-50" th:formaction="@{/admin/api/dashboard}">
+                <span class="material-symbols-outlined">
+                    home
+                </span>
+                    <span>Back to Dashboard</span>
+                </button>
+
+                <button class="flex gap-2 items-center justify-center  w-fit p-2 border rounded bg-amber-50" th:formaction="@{/admin/api/ambulance/{id}(id=${request.id})/cancel}">
+                <span class="material-symbols-outlined">
+                    cancel
+                </span>
+                    <span>Cancel Ambulance</span>
+                </button>
+            </section>
+        </div>
+    </form>
+
+      <script>
+          let message = document.getElementById('msg');
+          if(message.innerText) {
+               alert(message.innerText);
+          }
+      </script>
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<html lang="en"
+    xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambulance Service Provider | Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/output.css}">
+</head>
+<body>
+<main class="container mx-auto w-full">
+    <form>
+        <span id="error" th:text="${error}" hidden></span>
+        <header class="w-full flex flex-col bg-blue-500 py-5 items-center justify-center">
+            <h2 class="text-center text-2xl font-bold text-white mb-5">Ambulance Dispatch Admin</h2>
+            <section class="w-full">
+                <ol class="w-full flex lg:flex-row items-center justify-evenly gap-3 mx-auto">
+                    <li class=" text-gray-200 hover:text-gray-400 border w-fit py-2 px-4 rounded-2xl">
+                        <button title="Admin Dashboard" th:formaction="@{/admin/api/dashboard}">Dashboard</button>
+                    </li>
+                    <li class=" text-gray-200 hover:text-gray-400 border w-fit py-2 px-4 rounded-2xl ">
+                        <button title="Check Ambulance List and Create Ambulance" th:formaction="@{/admin/api/ambulance/new}">Ambulances</button>
+                    </li>
+
+                    <li class="text-gray-200 hover:text-gray-400 border w-fit py-2 px-4 rounded-2xl">
+                        <button title="Admin Settings" th:formaction="@{/admin/api/profile}">Settings</button>
+                    </li>
+                </ol>
+            </section>
+        </header>
+
+        <div class="content">
+
+            <div class="services flex items-center justify-center">
+                <section class="flex flex-col border border-gray-500 w-fit px-5 m-10 rounded-2xl text-center">
+                    <span class="block font-bold">Active Requests</span>
+                    <span class="font-light" th:if="${pendingRequestList.size() <= 0}">N/A</span>
+                    <span class="font-light" th:if="${pendingRequestList.size() > 0}" th:text="${pendingRequestList.size()}"></span>
+                </section>
+
+                <section class="flex flex-col border border-gray-500 w-fit px-5 m-10 rounded-2xl text-center">
+                    <span class="block font-bold">Available Ambulances</span>
+                    <span class="font-light" th:if="${ambulanceList.size() <= 0}">N/A</span>
+                    <span class="font-light" th:if="${ambulanceList.size() > 0}" th:text="${ambulanceList.size()}"></span>
+                </section>
+
+                <section class="flex flex-col border border-gray-500 px-5 w-fit m-10 rounded-2xl text-center">
+                    <span class="block font-bold">Completed Services</span>
+                    <span class="font-light" th:if="${activeRequestList.size() <= 0}">N/A</span>
+                    <span class="font-light" th:if="${activeRequestList.size() > 0}" th:text="${activeRequestList.size()}"></span>
+                </section>
+            </div>
+
+            <div class="main-content mx-5">
+                <h3 class="font-bold">All Requests</h3>
+                <div th:if="${userRequests.size() > 0}" class="w-full overflow-x-auto  mt-5">
+                    <table class="w-full table-auto border border-gray-300 text-sm">
+                        <thead class="bg-gray-100 dark:bg-gray-700 dark:text-white">
+                        <tr>
+                            <th class="px-4 py-2 border-b">Name</th>
+                            <th class="px-4 py-2 border-b">Location</th>
+                            <th class="px-4 py-2 border-b">Request Time</th>
+                            <th class="px-4 py-2 border-b">Status</th>
+                            <th class="px-4 py-2 border-b">Emergency Level</th>
+                            <th class="px-4 py-2 border-b">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="request: ${userRequests}">
+                        <tr class="hover:bg-gray-50 text-center">
+                            <td class="px-4 py-2 border-b" th:text="${request.userDTO.fullname}">Alice</td>
+                            <td class="px-4 py-2 border-b" th:text="${request.address}">alice@example.com</td>
+                            <td class="px-4 py-2 border-b" th:text="${request.request_time}">Admin</td>
+                            <td class="px-4 py-2 border-b stats" th:text="${request.requestStatus}">Pending</td>
+                            <td class="px-4 py-2 border-b" th:text="${request.emergencyLevel}">Pending</td>
+                            <td class="px-4 py-2 border-b">
+                                <button class="w-fit border px-5 py-2 rounded-2xl bg-blue-500 text-white font-bold"
+                                  th:formaction="@{/admin/api/ambulance/assign/{id}(id=${request.id})}" th:if="${request.requestStatus != 'APPROVED'}" formmethod="post" th:formmethod="post" >
+                                    <span>Assign</span>
+                                </button>
+
+                                <button class="w-fit border px-5 py-2 rounded-2xl bg-blue-500 text-white font-bold"
+                                        th:formaction="@{/admin/api/ambulance/track/{requestId}(requestId=${request.id})}" th:if="${request.requestStatus == 'APPROVED'}" formmethod="post" th:formmethod="post" >
+                                    <span>Track</span>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-5 font-bold text-3xl text-center" th:if="${userRequests.size() <= 0}">
+                    <span>No Available Request</span>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+<script>
+    let msg = document.getElementById('error');
+    if(msg.innerText) {
+        console.log(msg.innerText);
+        alert(`${msg.innerText}`);
+    }
+</script>
+</body>
+</html>

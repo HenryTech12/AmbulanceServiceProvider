@@ -8,6 +8,6 @@ RUN mvn clean package -DskipTests
 # Stage 2: Run the app
 FROM openjdk:17
 WORKDIR /app
-COPY --from=build /app/target/demo-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/AmulanceServiceProvider-0.0.1-SNAPSHOT app.jar
 CMD ["java", "-jar", "app.jar"]
 

@@ -1,13 +1,11 @@
-# Stage 1: Build the app
+# Use Maven to build the application
 FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+COPY . .
 RUN mvn clean package -DskipTests
 
-# Stage 2: Run the app
-FROM openjdk:17
+# Use lightweight JDK to run the app
+FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
-COPY --from=build /app/target/AmulanceServiceProvider-0.0.1-SNAPSHOT app.jar
-CMD ["java", "-jar", "app.jar"]
-
+COPY --from=build /app/target/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]

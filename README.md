@@ -48,3 +48,11 @@ Administrators can:
    ```bash
    git clone https://github.com/yourusername/ambulance-dispatch-system.git
    cd ambulance-dispatch-system
+
+
+## 🌐 Access Points
+
+- 🚀 **Swagger API Docs:** [`/swagger-ui.html`](https://ambulanceserviceprovider.onrender.com/swagger-ui/index.html)  
+- 🏠 **App UI:** [`/`](https://ambulanceserviceprovider.onrender.com/api/user)
+
+---

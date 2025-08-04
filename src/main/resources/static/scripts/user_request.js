@@ -1,14 +1,11 @@
 
-    let medical_report = document.getElementById('emergency');
-    let AIMSG = document.getElementById('AIMSG');
     const apiKey = "AIzaSyCirh9WnsFgaaevtO96vkUSoJuH3kqjXAk"; // Use only in testing, not production
+
+    let medical_report = document.getElementById('emergency');
 
     async function main() {
       const text = document.getElementById("emergency").value;
       console.log('Text: '+text);
-      if(text !== null) {
-            AIMSG.innerText='Generating Emergency Level....';
-      }
       const response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
         {
